@@ -5,7 +5,7 @@ OpenWorkspace(){
 "
 }
 
-WriteWorkspace(){
+SaveWorkspace(){
     echo "This function will allow users to create a workspace by entering programs, for later use
 "
 }
@@ -16,15 +16,19 @@ SaveWorkspace(){
 }
 
 
+# Open workspace (2 params: open command and workspace name)
+if [ "$#" -eq 2 ] && [ $1 == "open" ] then
+    OpenWorkSpace()
+
 
 # Set savefile location (2 params: set command and dir location)
-if [ "$#" -eq 2 ] && [ $1 == "new" ]; then
+elif [ "$#" -eq 2 ] && [ $1 == "new" ]; then
     SaveWorkspace
 
-# Write to file functions (Overloaded)
+# Save to file functions (Overloaded)
     # (1 param: write command launches list)
 elif [ "$#" -eq 1 ] && [ $1 == "save" ]; then
-    WriteWorkspace
+    SaveWorkspace
 
     # (2 param: write command and launch file)
 elif [ "$#" -eq 2 ] && [ $1 == "save" ]; then
