@@ -1,5 +1,7 @@
 #!/bin/bash
 
+mkdir -p /Users/$USER/WorkspaceLauncher/SaveData
+
 OpenWorkspace(){
     echo "This function will open a new workspace
 "
@@ -8,6 +10,8 @@ OpenWorkspace(){
 SaveWorkspace(){
     echo "This function will allow users to create a workspace by entering programs, for later use
 "
+#This command locates executable, for example Google Chrome
+#find / -name "Google Chrome" -type f -perm +111 -print -quit 2> >(grep -v 'Permission denied' >&2)
 }
 
 SaveWorkspace(){
@@ -15,6 +19,10 @@ SaveWorkspace(){
 "
 }
 
+# Possibly come back to this, for setting different save directories
+#    echo $2
+#    mkdir -p $2
+#    echo $2 >> /Users/ifreyja/WorkspaceLauncher/SaveData
 
 # Open workspace (2 params: open command and workspace name)
 if [ "$#" -eq 2 ] && [ $1 == "open" ] then
