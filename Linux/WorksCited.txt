@@ -1,0 +1,11 @@
+
+# Sources:
+#     Here is a list of sources, useful links, and information I synthesized to create this program
+#
+# [1] - https://stackoverflow.com/questions/592620/how-to-check-if-a-program-exists-from-a-bash-script
+# [2] - https://stackoverflow.com/questions/12815774/importing-functions-from-a-shell-script
+
+
+
+
+
