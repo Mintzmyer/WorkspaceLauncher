@@ -1,17 +1,13 @@
 #!/bin/bash
 
-# Gets location of source files
-SOURCE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
-source "$SOURCE/UI.sh"
-# Global location of all saved Workspace files
-SAVES="$SOURCE/../Savefiles/"
-
 #---------------------------------------------------------------------
 # This script handles the functionality for saving the current desktop
 #     layout; programs, window sizes and locations, etc
 #---------------------------------------------------------------------
 
-
+# Gets location of source files
+SOURCE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+source "$SOURCE/UI.sh"
 
 # Handles logic for getting user savefile name
 # Returns: filename - A name for the new workspace's savefile
@@ -99,6 +95,8 @@ saveNewWorkspace(){
     if [[ "$savefile" == "" ]]; then
         return;
     fi
+    # Empty any existing contents of file
+    > "$savefile"
 
     #for line in $(wmctrl -lp); do
     while read -r line; do
@@ -111,7 +109,7 @@ saveNewWorkspace(){
 	if [[ $REPLY =~ ^[Yy]$ ]]; then
             WID="$(getWidFromWmctrlLine "$line")"
 	    DIM="$(getDimensionsByWid "$WID")"
-            writeLineToSavefile "$savefile" "$CMD $DIM" 1
+            writeLineToSavefile "$savefile" "$CMD $DIM"
         fi
     done <<< $(wmctrl -lp)
 }

@@ -6,6 +6,8 @@
 #     for future programs as well, handling user input and so forth
 #---------------------------------------------------------------------
 
+# Global location of all saved Workspace files
+SAVES="$SOURCE/../Savefiles/"
 
 ## Function to get char+enter from user and return char  ##
 getBtnPress(){

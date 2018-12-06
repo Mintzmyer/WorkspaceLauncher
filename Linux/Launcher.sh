@@ -1,8 +1,5 @@
 #!/bin/bash
 
-source ./OpenWorkspace.sh
-source ./SaveWorkspace.sh
-
 #---------------------------------------------------------------------
 # This script saves and launches preset desktop/program configurations
 #     referred to as 'Workspaces'. Often, different tasks will require
@@ -17,66 +14,57 @@ source ./SaveWorkspace.sh
 #---------------------------------------------------------------------
 
 
+# Gets location of source files
+SOURCE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+source "$SOURCE/UI.sh"
+source "$SOURCE/OpenWorkspace.sh"
+source "$SOURCE/SaveWorkspace.sh"
+
+
 # Verifies a list of tools needed to run this program
 #     If missing, reports the tool(s) to the user, then exits this program
+#     Add tools as needed to for loop list following wmctrl
 preFlight(){
     toolsNeeded=0
-    for tool in xdotool wmctrl; do
-        command -v $tool >/dev/null 2>&1 || { echo >&2 "I require $tool but it's not installed."; }
-        toolsNeeded=$((toolsNeeded||1))
+    for tool in wmctrl; do
+        command -v $tool >/dev/null 2>&1 || \
+                { echo >&2 "I require $tool but it's not installed."; toolsNeeded=$((toolsNeeded+1)); }
     done
-    if [ $toolsNeeded -eq 1 ]; then
-        { echo >&2 "Aborting"; exit 1;}
+    if [ $toolsNeeded -ne 0 ]; then
+        { echo >&2 "Please install the necessary tools"; exit 1;}
     fi
 }
 
-OpenWorkspace(){
-    echo "This function will open a new workspace
-"
-}
-
-WriteWorkspace(){
-    echo "This function will allow users to create a workspace by entering programs, for later use
-"
-}
-
-SaveWorkspace(){
-    echo "This function will accrue info of current setup and save it as a workspace for later use
-"
-}
-
-
 main(){
-    echo "Main Loop"
     preFlight
+    # Read all saved workspaces into an array
+    workspaceFiles=()
+    unset workspaceFiles
+    i=0
+    while read file; do
+        i=$((i+1))
+        workspaceFiles+=( "$i" );
+        workspaceFiles+=( "$file" );
+    done < <(ls $SAVES)
+    # Add the option to save a new workspace
+    i=$((i+1))
+    workspaceFiles+=( "$i" );
+    workspaceFiles+=( "Save your current configuration as a workspace" );
+
+    echo "Workspace Launcher Menu: "
+    for (( j=1; j<=i; j++ )); do
+	    echo "    ${workspaceFiles[$((2*(j-1)))]}. ${workspaceFiles[$(((2*j)-1))]}"
+    done
+    REPLY=$(getBtnPress "Select an option to begin: ")
+    # Check if the user is saving a new workspace
+    if [ $REPLY -eq $i ]; then
+        saveNewWorkspace
+    else
+        file="${workspaceFiles[$(((2*REPLY)-1))]}"
+	savefile=$SAVES$file
+        launchWorkspaceFromSavefile "$savefile"
+    fi
 }
-
-# Set savefile location (2 params: set command and dir location)
-if [ "$#" -eq 2 ] && [ $1 == "new" ]; then
-    SaveWorkspace
-
-# Write to file functions (Overloaded)
-    # (1 param: write command launches list)
-elif [ "$#" -eq 1 ] && [ $1 == "save" ]; then
-    WriteWorkspace
-
-    # (2 param: write command and launch file)
-elif [ "$#" -eq 2 ] && [ $1 == "save" ]; then
-    SaveWorkspace
-
-# Usage helper message
-else
-    echo "Usage: ./Launcher.sh has a number of commands
-Unfortunately, none of them are implemented yet :)
-
-Set a savefile location to store preset workspaces
-
-Set a new workspace preset
-
-Open a new workspace preset
-"
-fi
-
 
 main
 
