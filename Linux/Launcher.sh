@@ -20,6 +20,9 @@ source "$SOURCE/UI.sh"
 source "$SOURCE/OpenWorkspace.sh"
 source "$SOURCE/SaveWorkspace.sh"
 
+# Turns on/off verbose debugging statements
+DEBUG=0
+
 
 # Verifies a list of tools needed to run this program
 #     If missing, reports the tool(s) to the user, then exits this program

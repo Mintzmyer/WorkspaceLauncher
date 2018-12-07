@@ -6,6 +6,7 @@
 # [2] - https://stackoverflow.com/questions/12815774/importing-functions-from-a-shell-script
 # [3] - https://google.github.io/styleguide/shell.xml
 # [4] - https://superuser.com/questions/632979/if-i-know-the-pid-number-of-a-process-how-can-i-get-its-name
+# [5] - https://unix.stackexchange.com/questions/218515/why-wont-function-return-until-background-process-ends
 
 
 

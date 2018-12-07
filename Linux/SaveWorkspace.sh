@@ -66,7 +66,7 @@ getCommandNameByPid(){
 # Returns: String x-offset y-offset width height separated by spaces
 getDimensionsByWid(){
     WID=$1
-    line=$(wmctrl -lG | grep $WID)
+    line=$(wmctrl -lG | grep $WID | head -1 )
     # Only single spaces, remove extra whitespace from line #
     dims=${line/  / }
     echo $(echo $dims | cut "-d " -f3-6)
