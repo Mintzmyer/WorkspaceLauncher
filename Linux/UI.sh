@@ -16,8 +16,10 @@ getBtnPress(){
     else
          prompt=$1
     fi
-    read -p "$prompt" -n 2 -r REPLY </dev/tty
-    echo -n $REPLY
+
+    read -p "$prompt" REPLY </dev/tty
+    btn="$(echo $REPLY | head -c 1)"
+    echo -n $btn
 }
 
 ## Function to get a string+enter from user and return string  ##
