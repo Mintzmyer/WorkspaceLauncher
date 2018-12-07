@@ -25,3 +25,9 @@
  This script handles the functionality for saving the current desktop
      layout; programs, window sizes and locations, etc
 
+
+### UI.sh
+
+ This script consolidates some of the common user interface logic
+     used throughout the program. Hopefully it can act as a template
+     for future programs as well, handling user input and so forth
